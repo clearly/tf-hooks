@@ -1,0 +1,14 @@
+type : object
+properties :
+  hooks :
+    type : object
+    properties :
+      actions :
+        type : array
+        items :
+          type : string
+          enum :
+            - add
+      target:
+        type : string
+        format : uri
