@@ -1,5 +1,5 @@
 hooks :
-  aws_instance :
+  aws_db_instance :
     actions :
       - add
-    target : http://requestb.in/149iitu1
+    target : http://requestb.in/744iitu1

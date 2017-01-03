@@ -95,9 +95,10 @@ module.exports.handleError = function handleError( error ) {
 module.exports.handleSuccess = function handleSuccess( value ) {
   let results = _.filter( value, { valid : 'fail' } );
   if( results.length > 0 ) {
+    console.log( colors.red(tfhooks.symbols.err), `${value.length} hooks ran with ${results.length} errors` );
     process.exit( 1 );
   } else {
-    console.log( colors.green(tfhooks.symbols.ok), `${value.length} hooks ran with no errors` );
+    console.log( colors.green(tfhooks.symbols.ok), `${value.length} hooks ran with 0 errors` );
     process.exit( 0 );
   }
 };
