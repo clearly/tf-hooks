@@ -32,8 +32,6 @@ function *loadApply() {
     inputApply = yield getStdin();
   }
   
-  debug( inputApply );
-  
   inputApply = inputApply || '';
   
   if( inputApply.length == 0) {
@@ -56,8 +54,6 @@ function loadState() {
     inputState = fs.readFileSync( 'terraform.tfstate', 'utf8' );
   }
   
-  debug( inputState );
-  
   inputState = inputState || '';
   
   if( inputState.length == 0 ) {
@@ -71,6 +67,9 @@ function loadState() {
 
 module.exports.main = function *main( testParams ) {
   debug( 'Entry %O', testParams );
+  debug( 'NO_PROXY %s', process.env[ 'NO_PROXY' ] );
+  debug( 'HTTP_PROXY %s', process.env[ 'HTTP_PROXY' ] );
+  debug( 'HTTPS_PROXY %s', process.env[ 'HTTPS_PROXY' ] );
   
   nconf.argv().env().file( { file: 'terraform.tfhooks', format: nconfyaml } ).overrides( testParams );
 
@@ -96,6 +95,9 @@ module.exports.handleSuccess = function handleSuccess( value ) {
   let results = _.filter( value, { valid : 'fail' } );
   if( results.length > 0 ) {
     console.log( colors.red(tfhooks.symbols.err), `${value.length} hooks ran with ${results.length} errors` );
+    for( let result of results ) {
+      console.log( colors.red( result.detail ) );
+    }
     process.exit( 1 );
   } else {
     console.log( colors.green(tfhooks.symbols.ok), `${value.length} hooks ran with 0 errors` );
