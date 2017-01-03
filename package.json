@@ -1,6 +1,6 @@
 {
   "name": "tf-hooks",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Make HTTP calls whenever Terraform makes changes to an environment",
   "main": "index.js",
   "scripts": {
