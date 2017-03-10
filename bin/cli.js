@@ -22,15 +22,6 @@ function loadConfig() {
   return config;
 }
 
-function loadDefaults() {
-  const defaults = nconf.get('defaults') || {};
-  debug( 'Validating defaults...' );
-  const errors = tfhooks.validateConfig( defaults );
-  if( errors ) throw { message : 'Default configuration errors', errors };
-  module.exports.defaults = defaults;
-  return defaults;
-}
-
 function *loadApply() {
   let inputApply = null;
   let apply = new TFApply();
@@ -79,19 +70,18 @@ module.exports.main = function *main( testParams ) {
   debug( 'NO_PROXY %s', process.env[ 'NO_PROXY' ] );
   debug( 'HTTP_PROXY %s', process.env[ 'HTTP_PROXY' ] );
   debug( 'HTTPS_PROXY %s', process.env[ 'HTTPS_PROXY' ] );
-
+  
   nconf.argv().env().file( { file: 'terraform.tfhooks', format: nconfyaml } ).overrides( testParams );
 
   const config  = loadConfig();
-  const defaults = loadDefaults();
   const apply   = yield loadApply();
   const state   = loadState();
 
   let results = [];
-
+  
   if( nconf.get( 'dryRun' ) != true ) {
     debug( 'Running hooks...' );
-    results = yield tfhooks.runHooks( { config, defaults, apply, state } );
+    results = yield tfhooks.runHooks( { config, apply, state } );
   }
   return results;
 };
