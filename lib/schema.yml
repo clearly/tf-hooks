@@ -1,5 +1,11 @@
 type : object
 properties :
+  defaults :
+    type : object
+    properties :
+      target:
+        type : string
+        format : uri
   hooks :
     type : object
     properties :

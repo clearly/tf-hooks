@@ -1,5 +1,7 @@
-hooks :
-  aws_db_instance :
-    actions :
-      - add
-    target : http://requestb.in/744iitu1
+defaults :
+  target : http://requestb.in/744iitu1
+#hooks :
+#  aws_db_instance :
+#    actions :
+#      - add
+#    target : http://requestb.in/744iitu1
